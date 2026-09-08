@@ -1,1 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parcel Platform — Discovery Questionnaire</title>
+<style>
+:root{--bg:#f4f1eb;--card:#fff;--text:#171717;--muted:#706d66;--line:#ddd8cf;--soft:#efebe3;--accent:#176b45}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;width:100%;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;line-height:1.5}
+main{width:100%;max-width:900px;margin:0 auto;padding:24px 16px 60px}
+.hero{padding:10px 0 22px}.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:11px;font-weight:800;color:var(--muted)}
+h1{font-size:clamp(34px,7vw,56px);line-height:1;letter-spacing:-.045em;margin:9px 0 14px}
+.hero p{color:var(--muted);max-width:720px;font-size:17px;margin:0}
+.navbar{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.navlink{display:inline-block;padding:9px 13px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--text);background:#fff;font-weight:750;font-size:13px}
+.navlink.active{background:var(--text);color:#fff}
+.progress{position:sticky;top:0;z-index:10;background:#f4f1ebee;padding:10px 0 13px;backdrop-filter:blur(8px)}
+.track{height:7px;background:var(--line);border-radius:99px;overflow:hidden}.fill{height:100%;width:0;background:var(--text);transition:.2s}
+.progress small{display:flex;justify-content:space-between;color:var(--muted);margin-top:6px}
+.card{width:100%;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:clamp(17px,4vw,24px);margin:16px 0;box-shadow:0 7px 25px rgba(0,0,0,.03)}
+h2{font-size:27px;line-height:1.15;margin:2px 0 7px}.intro{color:var(--muted);margin-top:0}
+.q{width:100%;padding:20px 0;border-top:1px solid var(--line)}.q:first-child{border-top:0;padding-top:0}
+.q h3{font-size:17px;line-height:1.35;margin:0 0 11px}.opts{display:grid;gap:8px}
+label.opt{display:flex;gap:10px;align-items:flex-start;width:100%;min-width:0;padding:12px;border:1px solid var(--line);border-radius:11px;cursor:pointer;background:#fff}
+label.opt:has(input:checked){background:var(--soft);border-color:#333}
+input[type=radio],input[type=checkbox]{width:auto;flex:0 0 auto;margin:4px 0 0;accent-color:#171717}
+textarea{display:block;width:100%;max-width:100%;min-width:0;font:inherit;border:1px solid var(--line);border-radius:10px;padding:11px 12px;background:#fff;outline:none}
+textarea{min-height:88px;resize:vertical}.extra{margin-top:9px}
+.note{background:#f0eee8;border:1px solid var(--line);padding:13px;border-radius:11px;color:#555;font-size:14px}
+.navbuttons{display:flex;justify-content:space-between;gap:10px;margin:16px 0}
+button{border:0;border-radius:11px;padding:13px 18px;font:inherit;font-weight:800;cursor:pointer}
+.back{background:#e6e2da;color:#171717}.reviewbtn{background:#171717;color:#fff}
+.reviewcard{display:none}.review{white-space:pre-wrap;overflow:auto;overflow-wrap:anywhere;max-height:600px;background:#faf9f6;border:1px solid var(--line);border-radius:12px;padding:17px;font:13px/1.55 ui-monospace,SFMono-Regular,Menlo,monospace}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}.actions button{flex:1;min-width:145px}
+.copy{background:#171717;color:#fff}.download{background:var(--accent);color:#fff}
+#status{text-align:center;font-weight:700}footer{text-align:center;color:var(--muted);font-size:12px;margin-top:28px}
+@media(max-width:600px){
+main{padding:18px 12px 50px}h1{font-size:clamp(32px,11vw,46px)}.hero p{font-size:15px}
+.card{border-radius:15px;padding:16px;margin:12px 0}h2{font-size:24px}.q{padding:18px 0}.q h3{font-size:16px}
+label.opt{font-size:15px;padding:11px}.navbuttons{position:sticky;bottom:8px;z-index:9;background:#f4f1ebee;padding:8px 0;backdrop-filter:blur(8px)}
+.navbuttons button{flex:1;min-width:0}.actions{flex-direction:column}.actions button{width:100%;min-width:0}
+}
+</style>
+</head>
+<body>
+<main>
+<header class="hero">
+<div class="eyebrow">Team Discovery • Part 1</div>
+<h1>Parcel Platform<br>Questionnaire</h1>
+<p>Define the parcel management and tracking side of the platform for Ghanaian transport and bus operators.</p>
+</header>
 
+<nav class="navbar">
+<a class="navlink active" href="index.html">📦 Parcel</a>
+<a class="navlink" href="bus-tickets.html">🚌 Bus Tickets</a>
+</nav>
+
+<div class="progress">
+<div class="track"><div class="fill" id="fill"></div></div>
+<small><span id="count">0 of 33 answered</span><span id="pct">0%</span></small>
+</div>
+
+<form id="questionnaire"></form>
+
+<div class="navbuttons">
+<button type="button" class="back" onclick="window.scrollTo({top:0,behavior:'smooth'})">Back to top</button>
+<button type="button" class="reviewbtn" onclick="reviewAnswers()">Review & Export</button>
+</div>
+
+<div class="card reviewcard" id="reviewCard">
+<h2>Review & Export</h2>
+<p class="intro">Nothing is submitted automatically.</p>
+<div class="review" id="review"></div>
+<div class="actions">
+<button class="back" type="button" onclick="editAnswers()">Edit</button>
+<button class="copy" type="button" onclick="copyAnswers()">Copy answers</button>
+<button class="download" type="button" onclick="downloadAnswers()">Download .txt</button>
+</div>
+<p id="status"></p>
+</div>
+
+<footer>Parcel Platform • Static questionnaire • No backend</footer>
+</main>
+
+<script>
+const questions=[
+{title:"1. What exactly should this business/platform be?",type:"radio",options:["Software sold/leased to individual bus companies","One multi-operator platform used by many bus companies","Our own logistics network using bus companies as partners","A combination / something different"],notes:true},
+{title:"2. Who should be our first target operator/customer?",type:"textarea",placeholder:"e.g. VIP parcel office, one branch, multiple operators, etc."},
+{title:"3. Should the platform be designed for multiple operators from day one?",type:"radio",options:["Yes","No","Not sure"]},
+{title:"4. Who should ultimately pay us?",type:"checkbox",options:["Bus/transport companies","Individual parcel branches","Customers/senders/receivers","Combination"],notes:true},
+{title:"5. What are the most important problems we should solve?",type:"checkbox",options:["Lost/misplaced parcels","No parcel tracking","Too many calls asking where parcels are","Paper/manual records","Poor financial/payment records","Cannot identify who handled a parcel","Poor branch communication","Fraud/theft","Slow processing"],notes:true,placeholder:"Other problems"},
+{title:"6. Who should be able to create a shipment?",type:"checkbox",options:["Parcel-office staff","Customer online","Both"]},
+{title:"7. How should the parcel be registered at the office?",type:"radio",options:["Staff enter details manually","Staff scan QR/barcode and enter details","Customer creates shipment first; staff verifies it","Combination"]},
+{title:"8. What sender information should we collect?",type:"checkbox",options:["Name","Phone","Ghana Card/ID","Address","Email"],notes:true,placeholder:"Other sender information"},
+{title:"9. What receiver information should we collect?",type:"checkbox",options:["Name","Phone","Destination/branch","ID required at collection","Email"],notes:true,placeholder:"Other receiver information"},
+{title:"10. What parcel information should we collect?",type:"checkbox",options:["Description","Quantity","Weight","Dimensions/size","Declared value","Photos","Special handling"],notes:true,placeholder:"Other parcel information"},
+{title:"11. What should the tracking number look like?",type:"radio",options:["Operator-based, e.g. VIP-ACC-KMS-000182","Independent platform ID, e.g. PX-7F82K9","Both platform ID and operator reference"],notes:true,placeholder:"Preferred format / reason"},
+{title:"12. Which parcel statuses should exist?",type:"checkbox",options:["Received at origin office","Ready for loading","Loaded onto bus","Bus departed","In transit","Arrived at destination","Ready for pickup","Collected/delivered","Delayed/exception"],notes:true,placeholder:"Other statuses"},
+{title:"13. Who should be able to update parcel status?",type:"checkbox",options:["Office staff","Driver","Branch manager","Automatically by GPS/system"],notes:true,placeholder:"Other rules"},
+{title:"14. Should customers see the full movement history?",type:"radio",options:["Yes, full history","Yes, customer-friendly milestones only","No"]},
+{title:"15. What should happen when a parcel changes bus or branch?",type:"radio",options:["Record every transfer and handler","Record only major transfers","No special tracking"],notes:true,placeholder:"Explain transfers"},
+{title:"16. Should we provide live GPS tracking of buses?",type:"radio",options:["Yes, in MVP","Yes, but later","No, status tracking is enough","Not sure"]},
+{title:"17. Which user types should exist?",type:"checkbox",options:["Customer","Parcel-office staff","Driver","Branch manager","Transport-company administrator","Platform administrator"]},
+{title:"18. What should customers be able to do?",type:"checkbox",options:["Create shipment","Track parcel","Receive notifications","View history","Pay online","Contact support"],notes:true,placeholder:"Other customer features"},
+{title:"19. What should parcel-office staff be able to do?",type:"checkbox",options:["Register parcels","Print receipt/label","Scan parcels","Assign route/bus","Update status","Confirm collection","Handle disputes"],notes:true,placeholder:"Other staff capabilities"},
+{title:"20. What should drivers be able to do?",type:"checkbox",options:["View assigned parcels","Scan parcels when loading","Confirm departure","Confirm arrival","Report incidents","Share GPS location","Little/no interaction"],notes:true,placeholder:"Other driver workflow"},
+{title:"21. What should branch managers/company administrators see?",type:"checkbox",options:["Parcel overview","Branch performance","Revenue/payment reports","Staff management","Driver management","Bus/route management","Customer/dispute management"],notes:true,placeholder:"Other management features"},
+{title:"22. What level of staff/driver verification should we use?",type:"radio",options:["Company approval + phone/OTP","Company-provided identity; no separate full KYC initially","Full KYC/identity verification","Different requirements by role"],notes:true,placeholder:"Security/KYC expectations"},
+{title:"23. What should happen if a parcel is lost, damaged or disputed?",type:"checkbox",options:["Full chain-of-custody audit trail","Record handler identity","Photos at handover points","Digital incident report","Customer claim/support workflow"],notes:true,placeholder:"Other dispute/claims requirements"},
+{title:"24. Should customers pay through the platform?",type:"radio",options:["Yes — Mobile Money and card","Yes — Mobile Money initially","No — payment remains at parcel office","Not sure"],notes:true,placeholder:"Payment ideas"},
+{title:"25. Which revenue models should we consider?",type:"checkbox",options:["Monthly subscription","Per-parcel platform fee","Hybrid subscription + per parcel","Commission on payments/bookings","Other"],notes:true,placeholder:"Suggested prices or business model"},
+{title:"26. What reports/analytics are important?",type:"checkbox",options:["Parcels by day/week/month","Revenue","Route performance","Branch performance","Delivery times","Delayed/lost/damaged parcels","Staff/driver activity"],notes:true,placeholder:"Other reports"},
+{title:"27. What absolutely must be in the MVP?",type:"checkbox",options:["Parcel registration","Unique tracking number","Customer tracking page","Staff/branch dashboard","Bus/driver assignment","Parcel status updates","SMS notifications","Collection confirmation","Admin dashboard"],notes:true,placeholder:"Non-negotiable MVP items"},
+{title:"28. Which features should come later?",type:"checkbox",options:["Live GPS","Mobile apps","WhatsApp notifications","Online payments","QR/barcode scanning","Insurance/claims","Open platform for independent logistics companies"],notes:true,placeholder:"Other future features"},
+{title:"29. What Ghana-specific issues should we design for?",type:"textarea",placeholder:"Mobile money, network reliability, shared phones, language, IDs, cash, rural routes, etc."},
+{title:"30. Who are our competitors or alternatives today?",type:"textarea",placeholder:"Bus operators, courier companies, apps, WhatsApp/manual processes, etc."},
+{title:"31. What would make a bus operator say “yes, we need this”?",type:"textarea",placeholder:"Think about measurable business value."},
+{title:"32. What should this become in 3–5 years?",type:"radio",options:["Nationwide parcel tracking system for Ghanaian bus companies","Nationwide multi-operator logistics platform","Broader logistics infrastructure including independent logistics companies","Something different"],notes:true,placeholder:"Describe the long-term vision"},
+{title:"33. Anything else the team should know?",type:"textarea",placeholder:"Ideas, concerns, risks, partnerships, features, questions, or anything we missed."}
+];
+
+const form=document.getElementById("questionnaire");
+
+questions.forEach((q,index)=>{
+const box=document.createElement("div");
+box.className="card";
+if(index===0)box.innerHTML="<h2>Project & Business Vision</h2><p class='intro'>Start with what we want the business to become.</p>";
+const question=document.createElement("div");
+question.className="q";
+let html=`<h3>${q.title}</h3>`;
+if(q.type==="radio"||q.type==="checkbox"){
+html+="<div class='opts'>";
+q.options.forEach(option=>{
+html+=`<label class="opt"><input type="${q.type}" name="q${index+1}" value="${escapeHtml(option)}"><span>${option}</span></label>`;
+});
+html+="</div>";
+}
+if(q.type==="textarea")html+=`<textarea name="q${index+1}" placeholder="${q.placeholder||""}"></textarea>`;
+if(q.notes)html+=`<textarea class="extra" name="q${index+1}_notes" placeholder="${q.placeholder||"Additional notes"}"></textarea>`;
+question.innerHTML=html;
+box.appendChild(question);
+form.appendChild(box);
+});
+
+const note=document.createElement("div");
+note.className="card";
+note.innerHTML="<div class='note'><strong>Done?</strong> Review your answers below, then copy or download the submission.</div>";
+form.appendChild(note);
+
+function updateProgress(){
+let answered=0;
+questions.forEach((q,index)=>{
+const elements=[...document.querySelectorAll(`[name="q${index+1}"]:checked`),...document.querySelectorAll(`[name="q${index+1}"]`)];
+if(elements.some(el=>el.value.trim()))answered++;
+});
+const p=Math.round(answered/questions.length*100);
+document.getElementById("fill").style.width=p+"%";
+document.getElementById("count").textContent=`${answered} of ${questions.length} answered`;
+document.getElementById("pct").textContent=p+"%";
+}
+document.addEventListener("input",updateProgress);
+document.addEventListener("change",updateProgress);
+updateProgress();
+
+function escapeHtml(text){return text.replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+function getAnswer(number){
+const checked=[...document.querySelectorAll(`[name="q${number}"]:checked`)];
+if(checked.length)return checked.map(x=>x.value).join(", ");
+const field=document.querySelector(`[name="q${number}"]`);
+if(field&&field.value.trim())return field.value.trim();
+return "Not answered";
+}
+
+function buildSubmission(){
+let output=["PARCEL PLATFORM — PROJECT DISCOVERY SUBMISSION","Generated: "+new Date().toLocaleString(),""];
+questions.forEach((q,index)=>{
+const n=index+1;
+output.push(q.title+"\nAnswer: "+getAnswer(n));
+const notes=document.querySelector(`[name="q${n}_notes"]`);
+if(notes&&notes.value.trim())output.push("Notes: "+notes.value.trim());
+output.push("");
+});
+output.push("END OF SUBMISSION");
+return output.join("\n");
+}
+
+function reviewAnswers(){
+document.getElementById("review").textContent=buildSubmission();
+const card=document.getElementById("reviewCard");
+card.style.display="block";
+card.scrollIntoView({behavior:"smooth"});
+}
+
+function editAnswers(){
+document.getElementById("reviewCard").style.display="none";
+window.scrollTo({top:0,behavior:"smooth"});
+}
+
+async function copyAnswers(){
+const status=document.getElementById("status");
+try{await navigator.clipboard.writeText(buildSubmission());status.textContent="✓ Answers copied."}
+catch(error){status.textContent="Copy blocked. Please copy the text manually."}
+}
+
+function downloadAnswers(){
+const blob=new Blob([buildSubmission()],{type:"text/plain;charset=utf-8"});
+const url=URL.createObjectURL(blob);
+const a=document.createElement("a");
+a.href=url;
+a.download="parcel-platform-submission.txt";
+document.body.appendChild(a);
+a.click();
+a.remove();
+URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
